@@ -9,6 +9,8 @@ from settings import vec2, EPS
 from copy import copy
 from helperfunctions import cross_2d
 
+import graphviz
+
 
 class Segment:
     def __init__(self, point1, point2):
@@ -76,13 +78,13 @@ class BSPTreeBuilder:
         '''
         # Select the first segment as the splitter segment
         splitter_seg = input_segments[0]
-        splitter_pos = splitter_seg.pos
+        splitter_pos = splitter_seg.position
         splitter_vec = splitter_seg.vector
 
         # Store the splitter's vector and positions in the current node
-        node.splitter_vec = splitter_vec
-        node.splitter_p0 = splitter_pos[0]
-        node.splitter_p1 = splitter_pos[1]
+        node.splitter_vector = splitter_vec
+        node.splitter_point1 = splitter_pos[0]
+        node.splitter_point2 = splitter_pos[1]
 
         # Initialize lists to hold segments
         # in front of and behind the splitter segment
@@ -90,8 +92,8 @@ class BSPTreeBuilder:
 
         # Iterate over the rest of the input segments
         for segment in input_segments[1:]:
-            segment_start = segment.pos[0]
-            segment_end = segment.pos[1]
+            segment_start = segment.position[0]
+            segment_end = segment.position[1]
             segment_vector = segment.vector
 
             # Compute the numerator and denominator
@@ -217,3 +219,34 @@ class BSPTreeBuilder:
             # creates new BSPNode and assigns it to the front of current node
             node.front = BSPNode()
             self.build_bsp_tree(node.front, front_segs)
+
+    def getAllChilds(self, node):
+        if not node:
+            return []
+    
+        nodes = []
+        if node.front:
+            nodes.append(node.front)
+            nodes.extend(self.getAllChilds(node.front))
+        if node.back:
+            nodes.append(node.back)
+            nodes.extend(self.getAllChilds(node.back))
+        
+        return nodes
+
+    # For visuals
+    def visualizetree(self,root):
+        dot = graphviz.Digraph()
+        dot.node(str(root.segment_id))
+        self.addedgeToVisual(root,dot)
+        dot.render("tree",format="png")
+
+    def addedgeToVisual(self,node,dot):
+        if node.front:
+            dot.node(str(node.front.segment_id))
+            dot.edge(str(node.segment_id),str(node.front.segment_id))
+            self.addedgeToVisual(node.front,dot)
+        if node.back:
+            dot.node(str(node.back.segment_id))
+            dot.edge(str(node.segment_id),str(node.back.segment_id))
+            self.addedgeToVisual(node.back,dot)
