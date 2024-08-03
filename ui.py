@@ -50,7 +50,12 @@ def add():
     tree.visualizetree(tree.root_node)
     img = Image.open("tree.png")
 
-    resize = img.resize((IMG_WIDTH, IMG_HEIGHT), Image.LANCZOS)
+    resize = img
+
+    # Once we have a lot of segments, we need to scale the image size to fit the screen
+    if (len(SEGMENTS) > 9):
+        resize = img.resize((IMG_WIDTH, IMG_HEIGHT), Image.LANCZOS)
+
     photoimg = ImageTk.PhotoImage(resize)
     lblimage.configure(image=photoimg)
     lblimage.image = photoimg
