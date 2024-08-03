@@ -12,12 +12,22 @@ import os
 # Can manually add graphviz to your path here
 os.environ["PATH"] += os.pathsep + 'C:/Users/bencj/Downloads/windows_10_cmake_Release_Graphviz-12.0.0-win64/Graphviz-12.0.0-win64/bin'
 
+
+IMG_WIDTH = 600
+IMG_HEIGHT = 600
+
 SEGMENTS = []
 tree = None
+
+# Need to keep images so they dont get grabage collected: https://stackoverflow.com/questions/45668895/tkinter-tclerror-image-doesnt-exist
+img = None
+photoimg = None
 
 def add():
     global tree
     global SEGMENTS
+    global img
+    global photoimg
     p1 = (int(txtvalue1_1.get()), int(txtvalue1_2.get()))
     p2 = (int(txtvalue2_1.get()), int(txtvalue2_2.get()))
     p3 = (int(txtvalue3_1.get()), int(txtvalue3_2.get()))
@@ -38,9 +48,12 @@ def add():
     tree = BSPTreeBuilder(SEGMENTS)
 
     tree.visualizetree(tree.root_node)
-    img = ImageTk.PhotoImage(Image.open("tree.png"))
-    lblimage.configure(image=img)
-    lblimage.image = img
+    img = Image.open("tree.png")
+
+    resize = img.resize((IMG_WIDTH, IMG_HEIGHT), Image.LANCZOS)
+    photoimg = ImageTk.PhotoImage(resize)
+    lblimage.configure(image=photoimg)
+    lblimage.image = photoimg
 
     updateNodeList()
 
@@ -59,12 +72,15 @@ def updateNodeList():
                        ") (" + str(node.splitter_point2.x) + "," + str(node.splitter_point2.y) + ")")
 
 def showimage(event):
-    os.system("tree.png") if os.path.exists("tree.png") else None
+    if os.path.exists("tree.png"):
+        return os.system("tree.png") 
+    else:
+        return None
 
 if __name__ == "__main__":
 
     root = tk.Tk()
-    root.title("Binary Space Partitioning")
+    root.title("Binary Space Partitioning Tree")
     root.geometry("900x800")
 
     lblvalue = tk.Label(root,text="Data point 1 (x, y):")
@@ -103,7 +119,7 @@ if __name__ == "__main__":
 
     lblimage = tk.Label(root)
     lblimage.bind("<Button-1>",showimage)
-    lblimage.place(x=300,y=10,width=600,height=600)
+    lblimage.place(x=300,y=10,width=IMG_WIDTH,height=IMG_HEIGHT)
     root.mainloop()
 
     if os.path.exists("tree.png"):
