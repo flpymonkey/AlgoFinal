@@ -6,24 +6,9 @@ Date: Aug 6th, 2024
 This program includes essental classes for BSPTree.
 """
 
-from BSPTree import Segment, BSPTreeBuilder, BSPNode
+from BSPTree import BSPTreeBuilder, BSPNode
 from glm import vec2
 from helperfunctions import is_on_front
-
-
-def create_segments(raw_segment):
-    '''
-    Converts a list of segment position pairs into a list of Segment objects
-    Args:
-        segment_positions:
-        A list of tuples containing start and end points of segments
-    Returns:
-        A list of Segment objects created from the given position pairs
-    '''
-    segments = []
-    for (p0, p1) in raw_segment:
-        segments.append(Segment(p0, p1))
-    return segments
 
 
 class BSPTreeTraverser:
