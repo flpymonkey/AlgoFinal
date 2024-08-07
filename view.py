@@ -5,7 +5,7 @@ from BSPTreeTraverser import BSPTreeTraverser
 from settings import MAP_HEIGHT, MAP_WIDTH, MAP_OFFSET
 
 
-class View:
+class Viewer:
     def __init__(self, segments, BSPTree: BSPTreeBuilder,
                  BSPTraverser: BSPTreeTraverser):
         self.BSPTree = BSPTree
