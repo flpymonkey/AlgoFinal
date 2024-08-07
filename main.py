@@ -4,7 +4,7 @@ import pyray as ray
 from glm import vec2
 from BSPTree import Segment, BSPTreeBuilder
 from BSPTreeTraverser import BSPTreeTraverser
-from view import View
+from view import Viewer
 
 
 def create_segments(raw_segment):
@@ -29,13 +29,13 @@ def main():
     bsp_tree = BSPTreeBuilder(segment_list)
     cam_pos = vec2(*CAM_POS)
     bsp_traverser = BSPTreeTraverser(bsp_tree, cam_pos)
-    view = View(segment_list, bsp_tree, bsp_traverser)
+    viewer = Viewer(segment_list, bsp_tree, bsp_traverser)
 
     while not ray.window_should_close():
         bsp_traverser.update()
         ray.begin_drawing()
         ray.clear_background(ray.BLACK)
-        view.draw()
+        viewer.draw()
         ray.end_drawing()
     ray.close_window()
 
