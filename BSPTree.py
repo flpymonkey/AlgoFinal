@@ -27,9 +27,9 @@ class BSPNode:
         self.front = front  # front node is BSPNode
         self.back = back  # back node is BSPNode
 
-        self.splitter_point1 = None
-        self.splitter_point2 = None
-        self.splitter_vector = None
+        self.splitter_point1: vec2 = None
+        self.splitter_point2: vec2 = None
+        self.splitter_vector: vec2 = None
 
         self.segment_id = None
 
@@ -235,18 +235,18 @@ class BSPTreeBuilder:
         return nodes
 
     # For visuals
-    def visualizetree(self,root):
+    def visualizetree(self, root):
         dot = graphviz.Digraph()
         dot.node(str(root.segment_id))
-        self.addedgeToVisual(root,dot)
-        dot.render("tree",format="png")
+        self.addedgeToVisual(root, dot)
+        dot.render("tree", format="png")
 
-    def addedgeToVisual(self,node,dot):
+    def addedgeToVisual(self, node, dot):
         if node.front:
             dot.node(str(node.front.segment_id))
-            dot.edge(str(node.segment_id),str(node.front.segment_id))
-            self.addedgeToVisual(node.front,dot)
+            dot.edge(str(node.segment_id), str(node.front.segment_id))
+            self.addedgeToVisual(node.front, dot)
         if node.back:
             dot.node(str(node.back.segment_id))
-            dot.edge(str(node.segment_id),str(node.back.segment_id))
-            self.addedgeToVisual(node.back,dot)
+            dot.edge(str(node.segment_id), str(node.back.segment_id))
+            self.addedgeToVisual(node.back, dot)
