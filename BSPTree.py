@@ -5,7 +5,8 @@ Other Team Members: Benjamin Johnson, Shitai Zhao
 Date: July 29th, 2024
 This program includes essental classes for BSPTree.
 """
-from settings import vec2, EPS
+from settings import EPS
+from glm import vec2
 from copy import copy
 from helperfunctions import cross_2d
 
