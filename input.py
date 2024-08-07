@@ -13,3 +13,5 @@ P_2 = (7.0, 8.0)
 
 # segments: a tuple of two points
 SEGMENTS = [(P_0, P_1), (P_1, P_2), (P_2, P_0)]
+
+CAM_POS = (6, 7)
