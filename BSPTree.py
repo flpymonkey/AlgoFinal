@@ -223,7 +223,7 @@ class BSPTreeBuilder:
     def getAllChilds(self, node):
         if not node:
             return []
-    
+
         nodes = []
         if node.front:
             nodes.append(node.front)
@@ -231,7 +231,7 @@ class BSPTreeBuilder:
         if node.back:
             nodes.append(node.back)
             nodes.extend(self.getAllChilds(node.back))
-        
+
         return nodes
 
     # For visuals
