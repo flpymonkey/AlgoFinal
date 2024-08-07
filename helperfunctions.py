@@ -1,4 +1,20 @@
 from glm import vec2
+from BSPTree import Segment
+
+
+def create_segments(raw_segment):
+    '''
+    Converts a list of segment position pairs into a list of Segment objects
+    Args:
+        segment_positions:
+        A list of tuples containing start and end points of segments
+    Returns:
+        A list of Segment objects created from the given position pairs
+    '''
+    segments = []
+    for (p0, p1) in raw_segment:
+        segments.append(Segment(p0, p1))
+    return segments
 
 
 def cross_2d(vec_0: vec2, vec_1: vec2):
