@@ -29,7 +29,8 @@ def main():
     bsp_tree = BSPTreeBuilder(segment_list)
     cam_pos = vec2(*CAM_POS)
     bsp_traverser = BSPTreeTraverser(bsp_tree, cam_pos)
-    viewer = Viewer(segment_list, bsp_tree, bsp_traverser)
+    splitted_segments = bsp_tree.segments
+    viewer = Viewer(splitted_segments, bsp_tree, bsp_traverser)
 
     while not ray.window_should_close():
         bsp_traverser.update()
