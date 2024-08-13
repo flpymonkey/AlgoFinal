@@ -9,9 +9,13 @@ from BSPTree import *
 # Download graphviz and add it to your libary: https://graphviz.org/download/
 
 import os
-# Can manually add graphviz to your path here
-os.environ["PATH"] += os.pathsep + 'C:/Users/bencj/Downloads/windows_10_cmake_Release_Graphviz-12.0.0-win64/Graphviz-12.0.0-win64/bin'
 
+# If python is unable to find your local graphviz installation, you can manually add it.
+# Can manually add graphviz to your path here:
+
+#################################
+# os.environ["PATH"] += os.pathsep + 'C:/Users/bencj/Downloads/windows_10_cmake_Release_Graphviz-12.0.0-win64/Graphviz-12.0.0-win64/bin'
+#################################
 
 IMG_WIDTH = 600
 IMG_HEIGHT = 600

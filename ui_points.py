@@ -20,9 +20,12 @@ import time
 # Download graphviz and add it to your libary: https://graphviz.org/download/
 
 import os
-# Can manually add graphviz to your path here
-os.environ["PATH"] += os.pathsep + 'C:/Users/bencj/Downloads/windows_10_cmake_Release_Graphviz-12.0.0-win64/Graphviz-12.0.0-win64/bin'
+# If python is unable to find your local graphviz installation, you can manually add it.
+# Can manually add graphviz to your path here:
 
+#################################
+# os.environ["PATH"] += os.pathsep + 'C:/Users/bencj/Downloads/windows_10_cmake_Release_Graphviz-12.0.0-win64/Graphviz-12.0.0-win64/bin'
+#################################
 
 IMG_WIDTH = 600
 IMG_HEIGHT = 600
@@ -37,6 +40,7 @@ img = None
 photoimg = None
 
 def add():
+    # Create a new bsp tree and open a new shapes view in a new process
     global bsp_tree
     global SEGMENTS
     global img
@@ -133,6 +137,7 @@ def mainShapes(bsp_tree):
 
 if __name__ == "__main__":
 
+    # Initialize the root tkinktr 
     root = tk.Tk()
     root.title("Binary Space Partitioning Tree")
     root.geometry("900x800")

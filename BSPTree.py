@@ -237,12 +237,19 @@ class BSPTreeBuilder:
 
     # For visuals
     def visualizetree(self, root):
+        # Create a new graph in graphviz
         dot = graphviz.Digraph()
+
+        # Add the root node
         dot.node(str(root.segment_id))
         self.addedgeToVisual(root, dot)
+
+        # Create the tree image and save to a local file
         dot.render("tree", format="png")
 
     def addedgeToVisual(self, node, dot):
+        # Recursively add each node to the tree by visiting the
+        # front and back segments
         if node.front:
             dot.node(str(node.front.segment_id))
             dot.edge(str(node.segment_id), str(node.front.segment_id))
