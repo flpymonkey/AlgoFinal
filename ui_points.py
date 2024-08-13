@@ -4,7 +4,18 @@ from tkinter import messagebox
 from PIL import ImageTk, Image
 import os
 
+import pyray as ray
+
 from BSPTree import *
+from BSPTreeTraverser import BSPTreeTraverser
+from settings import WIN_WIDTH, WIN_HEIGHT
+from input import CAM_POS
+
+from view import Viewer
+
+import multiprocessing
+import time
+
 
 # Download graphviz and add it to your libary: https://graphviz.org/download/
 
@@ -19,14 +30,14 @@ IMG_HEIGHT = 600
 POINTS = []
 
 SEGMENTS = []
-tree = None
+bsp_tree = None
 
 # Need to keep images so they dont get grabage collected: https://stackoverflow.com/questions/45668895/tkinter-tclerror-image-doesnt-exist
 img = None
 photoimg = None
 
 def add():
-    global tree
+    global bsp_tree
     global SEGMENTS
     global img
     global photoimg
@@ -56,15 +67,15 @@ def add():
 
 
     # Add the first node
-    tree = BSPTreeBuilder(SEGMENTS)
+    bsp_tree = BSPTreeBuilder(SEGMENTS)
 
-    tree.visualizetree(tree.root_node)
+    bsp_tree.visualizetree(bsp_tree.root_node)
     img = Image.open("tree.png")
 
     resize = img
 
     # Once we have a lot of segments, we need to scale the image size to fit the screen
-    if (len(SEGMENTS) > 9):
+    if (len(SEGMENTS) > 7):
         resize = img.resize((IMG_WIDTH, IMG_HEIGHT), Image.LANCZOS)
 
     photoimg = ImageTk.PhotoImage(resize)
@@ -73,6 +84,10 @@ def add():
 
     updateNodeList()
     updatePointList()
+
+    # Start the shapes process
+    p1 = multiprocessing.Process(target=mainShapes, args=(bsp_tree,))
+    p1.start()
 
 def updatePointList():
     listbox2.delete(0, tk.END)
@@ -83,9 +98,9 @@ def updatePointList():
 def updateNodeList():
     listbox.delete(0, tk.END)
 
-    root = tree.root_node
+    root = bsp_tree.root_node
 
-    nodes = tree.getAllChilds(root)
+    nodes = bsp_tree.getAllChilds(root)
 
     nodes.append(root)
     # Insert new items
@@ -99,6 +114,22 @@ def showimage(event):
         return os.system("tree.png") 
     else:
         return None
+    
+def mainShapes(bsp_tree):
+    ray.set_trace_log_level(ray.LOG_ERROR)
+    ray.init_window(WIN_WIDTH, WIN_HEIGHT, 'BSP Tree')
+    cam_pos = vec2(*CAM_POS)
+    bsp_traverser = BSPTreeTraverser(bsp_tree, cam_pos)
+    splitted_segments = bsp_tree.segments
+    viewer = Viewer(splitted_segments, bsp_tree, bsp_traverser)
+    while not ray.window_should_close():
+        bsp_traverser.update()
+        ray.begin_drawing()
+        ray.clear_background(ray.BLACK)
+        viewer.draw()
+        ray.end_drawing()
+        
+    ray.close_window()
 
 if __name__ == "__main__":
 

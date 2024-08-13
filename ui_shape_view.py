@@ -13,6 +13,11 @@ from BSPTreeTraverser import BSPTreeTraverser
 from settings import WIN_WIDTH, WIN_HEIGHT
 from input import CAM_POS
 
+import multiprocessing
+import time
+
+from input import *
+
 
 # Download graphviz and add it to your libary: https://graphviz.org/download/
 
@@ -26,45 +31,6 @@ IMG_HEIGHT = 600
 
 
 # Points
-
-# Example one
-# P_00 = (1.0, 1.0)
-# P_01 = (7.0, 1.0)
-# P_02 = (7.0, 8.0)
-# P_03 = (1.0, 8.0)
-# #
-# P_04 = (5.0, 2.0)
-# P_05 = (4.0, 4.0)
-# P_06 = (5.0, 6.0)
-# P_07 = (6.0, 4.0)
-
-# SEGMENTS = [
-#     (P_04, P_05), (P_05, P_06), (P_06, P_07), (P_07, P_04),
-#     (P_00, P_01), (P_01, P_02), (P_02, P_03), (P_03, P_00),
-# ]
-
-# POINTS = [
-#     P_00, P_01, P_02, P_03, P_04, P_05, P_06, P_07
-# ]
-
-
-# Example two
-P_00 = (1.0, 1.0)
-P_01 = (7.0, 1.0)
-P_02 = (7.0, 8.0)
-P_03 = (1.0, 8.0)
-#
-P_04 = (4.0, 1.0)
-P_05 = (4.0, 8.0)
-
-SEGMENTS = [
-    (P_00, P_01), (P_01, P_02), (P_02, P_03), (P_03, P_00),
-    (P_04, P_05),
-]
-
-POINTS = [
-    P_00, P_01, P_02, P_03, P_04, P_05, 
-]
 
 tree = None
 
@@ -148,54 +114,68 @@ def getAllChilds(node):
         nodes.extend(getAllChilds(node.back))
     return nodes
 
-def main():
-    ray.set_trace_log_level(ray.LOG_ERROR)
-    ray.init_window(WIN_WIDTH, WIN_HEIGHT, 'BSP Tree')
-    segment_list = create_segments(SEGMENTS)
-    bsp_tree = BSPTreeBuilder(segment_list)
-    cam_pos = vec2(*CAM_POS)
-    bsp_traverser = BSPTreeTraverser(bsp_tree, cam_pos)
-    viewer = Viewer(segment_list, bsp_tree, bsp_traverser)
-
-
+def mainTree(bsp_tree):
+    
     root = tk.Tk()
     root.title("Binary Space Partitioning Tree")
     root.geometry("900x800")
 
+    
+    lbl_seg = tk.Label(root,text="Segments:")
+    lbl_seg.place(x=100,y=200,width=100)
+    # Add a listbox to display segement details
+    seglist = tk.Listbox(root)
+    seglist.place(x=100,y=250,width=300, height=400)
+
+    lbl_point = tk.Label(root,text="Points:")
+    lbl_point.place(x=0,y=200,width=100)
+    # Add a listbox to display point details
+    pointlist = tk.Listbox(root)
+    pointlist.place(x=0,y=250,width=100, height=400)
+
+    lblimage = tk.Label(root)
+    lblimage.bind("<Button-1>",showimage)
+    lblimage.place(x=300,y=10,width=IMG_WIDTH,height=IMG_HEIGHT)
+
+    add(bsp_tree, pointlist, seglist, lblimage)
+
+
+    root.mainloop()
+
+    if os.path.exists("tree.png"):
+        os.remove("tree.png")
+        os.remove("tree")
+
+
+def mainShapes(bsp_tree):
+    ray.set_trace_log_level(ray.LOG_ERROR)
+    ray.init_window(WIN_WIDTH, WIN_HEIGHT, 'BSP Tree')
+    cam_pos = vec2(*CAM_POS)
+    bsp_traverser = BSPTreeTraverser(bsp_tree, cam_pos)
+    splitted_segments = bsp_tree.segments
+    viewer = Viewer(splitted_segments, bsp_tree, bsp_traverser)
     while not ray.window_should_close():
         bsp_traverser.update()
         ray.begin_drawing()
         ray.clear_background(ray.BLACK)
         viewer.draw()
         ray.end_drawing()
-
-
-        lbl_seg = tk.Label(root,text="Segments:")
-        lbl_seg.place(x=100,y=200,width=100)
-        # Add a listbox to display segement details
-        seglist = tk.Listbox(root)
-        seglist.place(x=100,y=250,width=300, height=400)
-
-        lbl_point = tk.Label(root,text="Points:")
-        lbl_point.place(x=0,y=200,width=100)
-        # Add a listbox to display point details
-        pointlist = tk.Listbox(root)
-        pointlist.place(x=0,y=250,width=100, height=400)
-
-        lblimage = tk.Label(root)
-        lblimage.bind("<Button-1>",showimage)
-        lblimage.place(x=300,y=10,width=IMG_WIDTH,height=IMG_HEIGHT)
-
-        add(bsp_tree, pointlist, seglist, lblimage)
-
-        root.mainloop()
-
-        if os.path.exists("tree.png"):
-            os.remove("tree.png")
-            os.remove("tree")
         
     ray.close_window()
 
 
 if __name__ == '__main__':
-    main()
+    
+    segment_list = create_segments(SEGMENTS)
+
+    print()
+    bsp_tree = BSPTreeBuilder(segment_list)
+
+    p1 = multiprocessing.Process(target=mainShapes, args=(bsp_tree,))
+    p2 = multiprocessing.Process(target=mainTree,  args=(bsp_tree,))
+
+    p1.start()
+    p2.start()
+
+    p1.join()
+    p2.join()

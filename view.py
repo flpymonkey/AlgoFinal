@@ -38,6 +38,8 @@ class Viewer:
             (x0, y0), (x1, y1) = p0, p1 = self.segments[seg_id]
             #
             ray.draw_line_v((x0, y0), (x1, y1), seg_color)
+
+            ray.draw_text(str(seg_id), int(p0.x), int(y0), 50, ray.WHITE)
             self.draw_normal(p0, p1, seg_color)
             #
             ray.draw_circle_v((x0, y0), 3, ray.WHITE)
