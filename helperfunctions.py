@@ -1,3 +1,14 @@
+"""
+CS5800 Final Project: BSPTree
+Author: Yuting Xie
+Other Team Members: Benjamin Johnson, Shitai Zhao, Qi Xin
+Date: Aug 6th, 2024
+This program includes the helper functions:
+cross_2d(vec_0, vec_1)
+is_on_front(vec_0, vec_1)
+in_on_back(vec_0, vec_1)
+"""
+
 from glm import vec2
 
 
