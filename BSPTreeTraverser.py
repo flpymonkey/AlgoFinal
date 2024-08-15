@@ -3,7 +3,7 @@ CS5800 Final Project: BSPTree
 Author: Yuting Xie
 Other Team Members: Benjamin Johnson, Shitai Zhao, Qi Xin
 Date: Aug 6th, 2024
-This program includes essental classes for BSPTree.
+This program includes the BSPTreeTraverser class
 """
 
 from BSPTree import BSPTreeBuilder, BSPNode
