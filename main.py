@@ -1,3 +1,18 @@
+'''
+CS5800 Final Project: BSPTree
+Author: Xin Qi, Yuting Xie
+Other Team Members: Benjamin Johnson, Shitai Zhao
+Date: Aug 9th, 2024
+
+BSP Tree Visualization
+
+This script demonstrates the implementation
+and visualizationof a BSP tree.
+
+To run the script, simply execute it as follows:
+python main.py
+'''
+
 from settings import WIN_WIDTH, WIN_HEIGHT
 from input import SEGMENTS, CAM_POS
 import pyray as ray
