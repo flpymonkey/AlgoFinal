@@ -1,3 +1,11 @@
+"""
+CS5800 Final Project: BSPTree
+Author: Yuting Xie
+Other Team Members: Benjamin Johnson, Shitai Zhao
+Date: Aug 2, 2024
+This program includes essental classes for Viewer.
+"""
+
 from glm import vec2, normalize
 import pyray as ray
 from BSPTree import BSPTreeBuilder
@@ -6,6 +14,43 @@ from settings import MAP_HEIGHT, MAP_WIDTH, MAP_OFFSET
 
 
 class Viewer:
+    '''
+    A class to handle rendering and visualization of a BSP tree
+
+    Attributes:
+        BSPTree (BSPTreeBuilder):
+            The BSP tree builder instance
+        BSPTraverser (BSPTreeTraverser):
+            The BSP tree traverser instance
+        raw_segments (list[tuple[vec2]]):
+            List of original segment positions
+        segments (list[tuple[vec2]]):
+            List of remapped segment positions for rendering
+        counter (float):
+            Counter used for controlling the order of segment drawing
+
+    Methods:
+        draw():
+            Main method to draw all elements (segments, player, etc.).
+        draw_player():
+            Draws the player's position on the screen.
+        draw_segments(seg_color):
+            Draws the segments in the correct order.
+        draw_normal(p0, p1, color, scale):
+            Draws the normal vector of a segment.
+        draw_raw_segments():
+            Draws the original unsplit segments.
+        remap_array(arr):
+            Converts segment positions from world to screen coordinates.
+        remap_vec2(p):
+            Remaps a single vector from world to screen coordinates.
+        remap_x(x, out_min, out_max):
+            Remaps x-coordinate from original range to screen space.
+        remap_y(y, out_min, out_max):
+            Remaps y-coordinate from original range to screen space.
+        get_bounds(segments):
+            Static method that computes the bounding box for the given
+    '''
     def __init__(self, segments, BSPTree: BSPTreeBuilder,
                  BSPTraverser: BSPTreeTraverser):
         self.BSPTree = BSPTree
