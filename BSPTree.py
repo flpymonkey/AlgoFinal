@@ -15,16 +15,47 @@ import graphviz
 
 class Segment:
     def __init__(self, point1, point2):
-        """
-        Params:
-            point1, point2: tuple of (x, y) coordinates
-        """
+        '''
+            Initializes a Segment instance with two endpoints represented
+            as (x, y) coordinates and calculates the vector representation
+
+        Args:
+            point1 (tuple): The first endpoint of the segment
+            point2 (tuple): The second endpoint of the segment
+
+        Attributes:
+            position:
+                A tuple containing the vectorized coordinates of the two points
+            vector (vec2):
+                The vector formed by subtracting point1 from point2
+        '''
         self.position = vec2(point1), vec2(point2)
         self.vector = self.position[1] - self.position[0]
 
 
 class BSPNode:
     def __init__(self, front=None, back=None):
+        '''
+        Initializes a BSPNode instance, representing a node in the BSP tree
+
+        Args:
+            front (BSPNode): The front child node, default is None
+            back (BSPNode): The back child node, default is None
+
+        Attributes:
+            front (BSPNode):
+                Stores the front child node in the BSP tree
+            back (BSPNode):
+                Stores the back child node in the BSP tree
+            splitter_point1 (vec2):
+                The first endpoint of the splitter segment
+            splitter_point2 (vec2):
+                The second endpoint of the splitter segment
+            splitter_vector (vec2):
+                The vector representation of the splitter segment
+            segment_id (int):
+                Unique ID assigned to each segment in the BSP tree
+        '''
         self.front = front  # front node is BSPNode
         self.back = back  # back node is BSPNode
 
@@ -37,6 +68,30 @@ class BSPNode:
 
 class BSPTreeBuilder:
     def __init__(self, raw_segments):
+        '''
+        Initializes the BSPTreeBuilder and
+        starts the process of constructing the BSP tree
+
+        Args:
+            raw_segments (list[Segment]):
+            A list of raw segments to be partitioned
+
+        Attributes:
+            raw_segments (list[Segment]):
+                The original input list of segments
+            root_node (BSPNode):
+                The root node of the BSP tree
+            segments (list[Segment]):
+                A list to store all segments processed during BSP tree creation
+            seg_id (int):
+                Counter used to assign unique IDs to segments
+            num_front (int):
+                Counter to track the number of front nodes created
+            num_back (int):
+                Counter to track the number of back nodes created
+            num_splits (int):
+                Counter to track the number of segment splits performed
+        '''
         self.raw_segments = raw_segments
         #
         self.root_node = BSPNode()
@@ -56,10 +111,6 @@ class BSPTreeBuilder:
         Splits the input segments into front and back lists
         based on the splitter segment
 
-        This method is part of the BSP tree construction process.
-        It takes a list of segments and splits them into two lists:
-        one containing segments in front of the splitter segment and
-        one containing segments behind the splitter segment.
         The splitter segment is chosen as the first segment in the input list.
 
         This method also updates the BSP tree node
