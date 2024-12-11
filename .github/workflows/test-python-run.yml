@@ -1,0 +1,32 @@
+name: Run Python Script
+run-name: ${{ github.actor }} is testing out running a python script through GitHub Actions 🚀
+on: [push]
+
+jobs:
+  run-script:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout this repository
+      uses: actions/checkout@v2
+
+    - name: Clone Team-Bathysphere Research Repository (Test Branch)
+      uses: actions/checkout@v2
+      with:
+        repository: Team-Bathysphere/research
+        path: research-repo
+        ref: Test  # Use the Test branch
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'  # Specify the desired Python versionß
+    - name: Install Dependencies
+      run: |
+        cd research-repo
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Python Script
+      run: |
+        cd research-repo
+        python ben/github-api-testing.py
