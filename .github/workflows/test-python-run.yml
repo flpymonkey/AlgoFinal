@@ -32,5 +32,5 @@ jobs:
 
     - name: Start Neo4j with Docker Compose
       run: |
-        cd research-repo/neo4j
+        cd research-repo/jerry/neo4j
         docker-compose up -d
