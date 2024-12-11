@@ -12,7 +12,7 @@ jobs:
 
     - name: Clone Team-Bathysphere Research Repository (Test Branch)
       run: |
-        git clone --branch Test https://x-access-token:${{ secrets.MY_PERSONAL_TOKEN }}@github.com/Team-Bathysphere/research.git research-repo
+        git clone --branch Test https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/Team-Bathysphere/research.git research-repo
 
     - name: Set up Python
       uses: actions/setup-python@v2
