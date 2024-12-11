@@ -24,7 +24,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     # Pull the contents of this repo to the runner for language parsing
-    # TODO put the name and owner of your repo here, generalize this
+    # TODO -- put the name and owner of your repo here, generalize this
     - name: Run Python Script - repo pull
       run: |
         cd research-repo
