@@ -35,6 +35,10 @@ jobs:
         cd research-repo/jerry/neo4j
         docker-compose up -d
 
+    # TODO fix this, wait a sec for neo4j to come up
+    - name: Wait
+      run: sleep 10  # waits for 10 seconds
+
     # TODO pass in the pulled repo name and parse the files
     - name: Run Python Script - Parse files
       run: |
