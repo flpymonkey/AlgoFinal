@@ -34,3 +34,9 @@ jobs:
       run: |
         cd research-repo/jerry/neo4j
         docker-compose up -d
+
+    # TODO pass in the pulled repo name and parse the files
+    - name: Run Python Script - Parse files
+      run: |
+        cd research-repo
+        python jerry/language-server-protocol-py/parse.py ./AlgoFinal
