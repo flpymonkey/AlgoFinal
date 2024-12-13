@@ -1,0 +1,22 @@
+# Put this file in a different GitHub repo to spin up Action runnners which will execute the docker-comnpose of the language parser
+
+name: Run Python Script
+run-name: ${{ github.actor }} is testing out running a python script through GitHub Actions 🚀
+on: [push]
+
+jobs:
+  run-script:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout this repository
+      uses: actions/checkout@v2
+
+    - name: Clone Team-Bathysphere Research Repository (Test Branch)
+      run: |
+        git clone --branch test-GitHub-API https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/Team-Bathysphere/research.git research-repo
+
+    - name: Run Neo4j and parse the files
+      run: |
+        cd research-repo/jerry/language-server-protocol-py
+        REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal docker-compose up --build
