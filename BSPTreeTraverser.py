@@ -44,6 +44,9 @@ class BSPTreeTraverser:
         '''
         self.root_node = BSPTree.root_node
         self.segments = BSPTree.segments
+
+	self.root = "TEST
+
         self.cam_pos = cam_pos
         self.seg_ids_to_draw = []
 
