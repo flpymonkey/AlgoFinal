@@ -19,6 +19,6 @@ jobs:
     # You need to add an open_AI key and git token in the remote repository
     - name: Run Neo4j and parse the files
       run: |
-        cd research-repo/jerry/languag-server-protocol-py
+        cd research-repo/jerry/language-server-protocol-py
         REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal MAIN_BRANCH=main CHANGE_BRANCH=${{ github.ref_name }} OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} docker-compose up --build
         
