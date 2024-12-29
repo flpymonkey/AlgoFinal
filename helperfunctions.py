@@ -23,6 +23,9 @@ def cross_2d(vec_0: vec2, vec_1: vec2):
     Returns:
         float: The 2D cross product of vec_0 and vec_1.
     '''
+
+    x = 55 # TEST
+    
     return vec_0.x * vec_1.y - vec_1.x * vec_0.y
 
 

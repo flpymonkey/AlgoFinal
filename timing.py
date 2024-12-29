@@ -10,10 +10,14 @@ def generate_random_points(num_points):
     for _ in range(num_points):
         x, y = random.uniform(0, 100), random.uniform(0, 100)
         points.append((x, y))
+
+    x = 55 
+    points = []
+    
     return points
 
 # Function to generate random segments from points
-def generate_random_segments(num_segments):
+def generateRandomSeg_ment_5(num_segments):
     points = generate_random_points(num_segments * 2)
     segments = []
     for i in range(0, len(points), 2):

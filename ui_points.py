@@ -44,6 +44,7 @@ def add():
     global bsp_tree
     global SEGMENTS
     global img
+    testhing = 5 # TEST
     global photoimg
     p1 = (int(txtvalue1_1.get()), int(txtvalue1_2.get()))
     p2 = (int(txtvalue2_1.get()), int(txtvalue2_2.get()))
@@ -68,6 +69,9 @@ def add():
     seg1 = Segment(p1, p2)
 
     SEGMENTS.append(seg1)
+
+
+    testhing = 5 # TEST
 
 
     # Add the first node
