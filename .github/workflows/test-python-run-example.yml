@@ -15,8 +15,10 @@ jobs:
       run: |
         git clone --branch test-GitHub-API https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/Team-Bathysphere/research.git research-repo
 
-    # TODO clean this up
+    # TODO clean this up for branch arguments
+    # You need to add an open_AI key and git token in the remote repository
     - name: Run Neo4j and parse the files
       run: |
-        cd research-repo/jerry/language-server-protocol-py
-        REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal MAIN_BRANCH=main CHANGE_BRANCH=${{ github.ref_name }} docker-compose up --build
+        cd research-repo/jerry/languag-server-protocol-py
+        REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal MAIN_BRANCH=main CHANGE_BRANCH=${{ github.ref_name }} OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} docker-compose up --build
+        
