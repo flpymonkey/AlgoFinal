@@ -12,8 +12,7 @@ def generate_random_points(num_points):
         points.append((x, y))
 
     x = 55 
-    points = []
-    
+    points = [] # TEST
     return points
 
 # Function to generate random segments from points
