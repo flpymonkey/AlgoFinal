@@ -18,5 +18,5 @@ jobs:
     # TODO clean this up
     - name: Run Neo4j and parse the files
       run: |
-        cd research-repo/jerry/languag-server-protocol-py
+        cd research-repo/jerry/language-server-protocol-py
         REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal MAIN_BRANCH=main CHANGE_BRANCH=${{ github.ref_name }} docker-compose up --build
