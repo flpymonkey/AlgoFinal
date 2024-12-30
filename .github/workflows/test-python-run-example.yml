@@ -20,5 +20,5 @@ jobs:
     - name: Run Neo4j and parse the files
       run: |
         cd research-repo/jerry/language-server-protocol-py
-        REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal MAIN_BRANCH=main CHANGE_BRANCH=${{ github.ref_name }} OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} docker-compose up --build
+        REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal MAIN_BRANCH=main CHANGE_BRANCH=${{ github.ref_name }} OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} GITHUB_TOKEN=${{secrets.MY_TOKEN}} docker-compose up --build
         
