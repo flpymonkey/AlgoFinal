@@ -1,26 +1,44 @@
-# Put this file in a different GitHub repo to spin up Action runnners which will execute the docker-comnpose of the language parser
+# This GitHub Actions workflow is designed to spin up Action runners that execute
+# the Docker Compose of the language parser. Place this file in a different GitHub repo.
+
 name: Run Python Script
 run-name: ${{ github.actor }} is testing out running a python script through GitHub Actions 🚀
+
+# Trigger the workflow on push events
 on: [push]
 
 jobs:
   run-script:
+    # Use a self-hosted runner
     runs-on: self-hosted
 
     steps:
-    - name: Checkout this repository
-      uses: actions/checkout@v2
+      # Step 1: Checkout the current repository
+      - name: Checkout this repository
+        uses: actions/checkout@v2
 
-    - name: Clone Team-Bathysphere Research Repository (Test Branch)
-      run: |
-        git clone --branch test-GitHub-API https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/Team-Bathysphere/research.git research-repo
+      # Step 2: Clone the Team-Bathysphere Research Repository (Test Branch)
+      - name: Clone Team-Bathysphere Research Repository (Test Branch)
+        run: |
+          git clone --branch test-GitHub-API https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/Team-Bathysphere/research.git research-repo
 
-    # TODO clean this up for branch arguments
-    # You need to add an open_AI key and git token in the remote repository
-    - name: Run Neo4j and parse the files
-      run: |
-        cd research-repo/jerry/language-server-protocol-py
-        REPO_AUTHOR=flpymonkey REPO_NAME=AlgoFinal MAIN_BRANCH=main CHANGE_BRANCH=${{ github.ref_name }} OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} GITHUB_TOKEN=${{secrets.MY_TOKEN}} docker-compose up --build --abort-on-container-exit
-    
-    - name: Report completion
-      run: echo "Execution completed."
+      # Step 3: Run the Neo4j Docker Compose and parse files
+      # Note: Ensure the OpenAI API key and GitHub Token are set in the remote repository's secrets
+      # TODO: Clean this up for branch arguments as needed
+      - name: Run Neo4j and parse the files
+        run: |
+          cd research-repo/jerry/language-server-protocol-py
+          REPO_AUTHOR=flpymonkey \
+          REPO_NAME=AlgoFinal \
+          MAIN_BRANCH=main \
+          CHANGE_BRANCH=${{ github.ref_name }} \
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+          GITHUB_TOKEN=${{ secrets.MY_TOKEN }} \
+          EMAIL_ADDRESS=${{ secrets.APP_EMAIL }} \
+          EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} \
+          docker-compose up --build --abort-on-container-exit
+
+      # Step 4: Report completion
+      - name: Report completion
+        run: echo "Execution completed."
+        
