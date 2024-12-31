@@ -31,6 +31,8 @@ def create_segments(raw_segment):
     Returns:
         A list of Segment objects created from the given position pairs
     '''
+    x = 0
+
     segments = []
     for (p0, p1) in raw_segment:
         segments.append(Segment(p0, p1))

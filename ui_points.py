@@ -44,10 +44,11 @@ def add():
     global bsp_tree
     global SEGMENTS
     global img
-    testhing = 5 # TEST
     global photoimg
     p1 = (int(txtvalue1_1.get()), int(txtvalue1_2.get()))
     p2 = (int(txtvalue2_1.get()), int(txtvalue2_2.get()))
+
+    hi = 5
 
     # See if point is already in points
     contains_p1 = False
