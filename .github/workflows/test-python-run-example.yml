@@ -36,9 +36,8 @@ jobs:
           GITHUB_TOKEN=${{ secrets.MY_TOKEN }} \
           EMAIL_ADDRESS=${{ secrets.APP_EMAIL }} \
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} \
-          docker-compose up --build --abort-on-container-exit
+          docker-compose up --build
 
       # Step 4: Report completion
       - name: Report completion
         run: echo "Execution completed."
-        
