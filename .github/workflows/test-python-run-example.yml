@@ -36,6 +36,7 @@ jobs:
           GITHUB_TOKEN=${{ secrets.MY_TOKEN }} \
           EMAIL_ADDRESS=${{ secrets.APP_EMAIL }} \
           EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} \
+          LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }} \
           docker-compose up --build --abort-on-container-exit
 
       # Step 4: Report completion
